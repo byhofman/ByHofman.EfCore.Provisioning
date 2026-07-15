@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <PackageId>ByHofman.EfCore.Provisioning</PackageId>
+    <Authors>Thomas Hofman</Authors>
+    <Description>EF Core migration provisioning extensions for ASP.NET Core — configurable startup migration checks and apply with structured logging.</Description>
+    <PackageTags>efcore;migrations;provisioning;aspnetcore</PackageTags>
+    <RepositoryUrl>https://github.com/byhofman/ByHofman.EfCore.Provisioning</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/byhofman/ByHofman.EfCore.Provisioning</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Minimum versions that support netstandard2.1; consuming apps resolve to their installed version -->
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>

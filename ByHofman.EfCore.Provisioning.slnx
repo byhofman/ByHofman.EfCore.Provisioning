@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/ByHofman.EfCore.Provisioning/ByHofman.EfCore.Provisioning.csproj" />
+  <Project Path="tests/ByHofman.EfCore.Provisioning.Tests/ByHofman.EfCore.Provisioning.Tests.csproj" />
+</Solution>

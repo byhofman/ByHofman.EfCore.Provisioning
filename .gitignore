@@ -1,0 +1,22 @@
+# Build output
+bin/
+obj/
+*.nupkg
+*.snupkg
+
+# VS / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.rsuser
+
+# dotnet tools
+.dotnet/
+.tool-manifest.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+.claude/settings.local.json
