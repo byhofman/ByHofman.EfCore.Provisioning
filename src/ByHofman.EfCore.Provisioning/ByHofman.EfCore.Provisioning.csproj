@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/byhofman/ByHofman.EfCore.Provisioning</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
