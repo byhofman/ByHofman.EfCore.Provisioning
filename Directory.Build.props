@@ -1,5 +1,6 @@
 <Project>
     <PropertyGroup>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <Company>Thomas Hofman</Company>
         <Copyright>Copyright (c) Thomas Hofman 2026</Copyright>
     </PropertyGroup>
