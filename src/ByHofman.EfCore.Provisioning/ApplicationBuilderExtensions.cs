@@ -29,6 +29,25 @@ public static class ApplicationBuilderExtensions
         var rootLogger = app.ApplicationServices.GetService<ILogger<TDbContext>>();
         var env = app.ApplicationServices.GetService<IHostEnvironment>();
 
+        var skipDueToEnvironment = options.MigrateOnEnvironments is { Length: > 0 }
+            && (env?.EnvironmentName is not { } envName
+                || !options.MigrateOnEnvironments.Contains(envName, StringComparer.OrdinalIgnoreCase));
+
+        // With every step off, provisioning must not touch the database at all: an app may start
+        // with none reachable (tests, a pod whose migrations run elsewhere).
+        var migrate = options.ApplyMigrations && !skipDueToEnvironment;
+        if (!options.CheckMigrations && !migrate && options.Seeder is null)
+        {
+            if (options.ApplyMigrations)
+            {
+                rootLogger?.LogInformation(
+                    "Skipping migrations for {DbContext} — environment '{Environment}' not in MigrateOnEnvironments",
+                    typeof(TDbContext).Name, env?.EnvironmentName ?? "unknown");
+            }
+
+            return app;
+        }
+
         for (var attempt = 0; ; attempt++)
         {
             try
@@ -59,10 +78,6 @@ public static class ApplicationBuilderExtensions
 
                 if (options.ApplyMigrations)
                 {
-                    var skipDueToEnvironment = options.MigrateOnEnvironments is { Length: > 0 }
-                        && (env?.EnvironmentName is not { } envName
-                            || !options.MigrateOnEnvironments.Contains(envName, StringComparer.OrdinalIgnoreCase));
-
                     if (skipDueToEnvironment)
                     {
                         logger?.LogInformation(
