@@ -132,6 +132,12 @@ Via `appsettings.json`:
 
 When the current environment is not in the list, a log entry is written at `Information` level and migrations are skipped. The seeder still runs.
 
+### Several replicas starting at once (PostgreSQL)
+
+On PostgreSQL, checking, migrating and seeding run under a session advisory lock (`pg_advisory_lock(hashtextextended('ByHofman.EfCore.Provisioning', 0))`), held on the connection EF migrates on. Replicas that start together on an empty database take turns: the first applies the migrations and runs the seeder, the others wait and then find nothing pending. EF Core's `MigrateAsync` alone lets two of them apply the same migration, and one fails with "already exists".
+
+The lock is per database and shared by every context this package provisions there. It is released when provisioning ends, and by PostgreSQL if the process dies. A seeder still has to be safe to run again, because a later replica runs it too; it just never runs at the same time as another. Other providers are provisioned as before, without a lock.
+
 ### Multiple DbContext
 
 Use `ProvisionAllAsync` with `EfProvisioningEntry.For<TDbContext>()` to provision multiple contexts sequentially, each with their own options:

@@ -36,6 +36,7 @@ public static class ApplicationBuilderExtensions
                 using var scope = app.ApplicationServices.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<TDbContext>();
                 var logger = scope.ServiceProvider.GetService<ILogger<TDbContext>>();
+                await using var migrationLock = await MigrationLock.AcquireAsync(context.Database, cancellationToken);
 
                 if (options.CheckMigrations)
                 {
